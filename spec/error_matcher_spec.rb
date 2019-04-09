@@ -1,16 +1,9 @@
-describe "Run tests with Tags" do
-    
-    it 'will run with slow tests', :slow => true do
-        sleep 2
-        puts 'This test takes a long time'
-    end
-    
-    it 'will run with fast tests', :quick => true do
-        puts 'runs fast'
-    end
-    
-    it 'will add another test'  do
-        puts 'Should be 6'
-    end
-    
+describe "An example of the error Matchers" do 
+   it "should show how the error Matchers work" do 
+      
+      # The following Expectations will all pass 
+      expect { 1/0 }.to raise_error(ZeroDivisionError)
+      expect { 1/0 }.to raise_error("divided by 0") 
+      expect { 1/0 }.to raise_error("divided by 0", ZeroDivisionError) 
+   end 
 end
