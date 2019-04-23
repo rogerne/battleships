@@ -15,4 +15,11 @@ describe Vessel do
 
 	    end
 	end
+
+	context "when in a game" do 
+	  it "should keep track of when it's hit" do
+	  	 v = Vessel.new "AC", "H", 3, 4
+	  	 expect(v.is_hit).to eq "Hit"
+	  end
+	end
 end

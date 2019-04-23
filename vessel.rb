@@ -11,7 +11,7 @@ class Vessel
     @x = x
     @y = y
   end
-  
+
 private
 def set_type(code)
   @code = code
@@ -40,6 +40,11 @@ end
 public
   def to_string
   "Length = #{@length}, direction = #{@direction} x = #{@x}, y = #{@y}"
+  end
+
+  public
+  def is_hit?
+    return "Hit"
   end
 
 end
