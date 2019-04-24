@@ -3,6 +3,8 @@ require_relative 'vessel'
 
 player1 = GameGrid.new 10
 
+
+=begin
 carrier1 = Vessel.new "AC" , "H", 1 , 1
 battleship1 = Vessel.new "BA" , "H", 3 , 5
 cruiser1 = Vessel.new "CR" , "V", 3 , 1
@@ -15,5 +17,7 @@ player1.add_vessel cruiser1
 player1.add_vessel sub1
 player1.add_vessel destroyer1
 #puts player1.vessels
+player1.player_grid
+=end
 
-player1.show_grid
+puts player1.player_grid

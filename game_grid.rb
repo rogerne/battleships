@@ -14,9 +14,9 @@ class GameGrid
   end
   
 public
-  def show_grid
+  def player_grid
     @grid.each do |x|
-      puts x.each { |y| y }.join(" ")
+      return x.each { |y| y }.join(" ")
     end
   end
   
