@@ -1,5 +1,5 @@
 class GameGrid
-  attr_accessor :vessels 
+  attr_accessor :vessels, :grid 
   
   def initialize(size)
     @vessels = Hash.new
@@ -14,9 +14,10 @@ class GameGrid
   end
   
 public
-  def player_grid
-    @grid.each do |x|
-      return x.each { |y| y }.join(" ")
+#provide a specific row of the grid
+  def player_grid_row(row)
+    player1.grid.each do |row|
+      puts x.each { |y| y }.join(" ")
     end
   end
   
@@ -25,7 +26,7 @@ public
     fill_grid vessel
   end
   
-  private
+private
   def fill_grid(v)
     case v.direction
     when "V"
