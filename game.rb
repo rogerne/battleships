@@ -17,19 +17,24 @@ player1.add_vessel cruiser1
 player1.add_vessel sub1
 player1.add_vessel destroyer1
 #puts player1.vessels
-
+=begin
 puts "Grid"
 player1.show_grid
-=begin
+
 puts "---------------------"
 (1..10).each {|i|
 #puts "Row #{i}"
 player1.show_grid_row i
 }
-=end
+
 
 player1_display = DisplayGrid.new 10
 puts player1_display.can_take_hit?(1,1)
 player1_display.update_grid(1,1,"+")
 player1_display.show_grid_row 1
 puts player1_display.can_take_hit?(1,1)
+=end
+
+p = GameGrid.new 3
+print "#{p.show_grid_row 1}a"
+

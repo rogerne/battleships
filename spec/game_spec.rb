@@ -1,7 +1,6 @@
 require './grid'
-require './game_grid'
 
-describe GameGrid do
+describe Grid do
 	
 	context "When initialized" do
 
@@ -11,4 +10,3 @@ describe GameGrid do
 		end
 	end
 end
-

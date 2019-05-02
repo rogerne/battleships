@@ -1,15 +1,21 @@
 class Vessel
- attr_reader :code, :x, :y, :direction, :length, :display_code
+ attr_reader :code, :x, :y, :direction, :length, :display_code, :hits, :sunk
  
   @length = 2
   @code = ""
   @display_code = ""
+  @hits
+  @sunk
   
   def initialize(type, direction, x, y)
     @type = set_type type
     @direction = direction
     @x = x
     @y = y
+    @hits = 0
+    @sunk = false
+
+  
   end
 
 private
@@ -42,8 +48,15 @@ public
   "Length = #{@length}, direction = #{@direction} x = #{@x}, y = #{@y}"
   end
 
-  public
-  def is_hit?
+  def hit
+    if  @hits < @length
+      @hits += 1
+    else
+      @sunk = true
+    end
+  end
+
+  def is_hit?(r, c)
     return "Hit"
   end
 
