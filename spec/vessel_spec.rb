@@ -6,7 +6,7 @@ describe Vessel do
 
 		it 'should provide a description' do
 			v = Vessel.new "AC", "H", 3, 4
-			expect(v.to_string).to eq "Length = 5, direction = H x = 3, y = 4"
+			expect(v.to_string).to eq "Type = AC, Code = A, Length = 5, direction = H x = 3, y = 4"
 	    end
 
 	    it 'should have the display code A' do
@@ -18,16 +18,19 @@ describe Vessel do
 
 	context "when in a game" do 
 	  it "should keep track of when it's hit" do
-	  	 v = Vessel.new "AC", "H", 3, 4
-	  	 expect(v.hits).to eq 0
-	  	 v.hit
-	  	 expect(v.hits).to eq 1
+	  	 v1 = Vessel.new "AC", "H", 3, 4
+	  	 expect(v1.hits).to eq 0
+	  	 v1.hit
+	  	 expect(v1.hits).to eq 1
 	  end
+
 	  it "should keep track of when it's sunk" do
-	  	 v = Vessel.new "DE", "H", 3, 4
-	  	 expect(v.sunk).to eq false
-	  	 5.times{v.hit}
-	  	 expect(v.sunk).to eq true
+	  	 v2 = Vessel.new "DE", "H", 3, 4
+	  	 expect(v2.sunk).to eq false
+	  	 2.times {v2.hit}
+	  	 expect(v2.hits).to eq 2
+	  	 expect(v2.sunk).to eq true
 	  end
 	end
+
 end
