@@ -2,7 +2,7 @@ class GameGrid < Grid
 
 public
   def add_vessel(vessel)
-    @vessels[vessel.code] = vessel
+    @vessels[vessel.type] = vessel
     fill_grid vessel
   end
   
