@@ -14,6 +14,11 @@ describe Player do
 			expect(c.to_string).to eq "Name = Computer, Computer"
 	    end
 
+	    it 'should provide me with a name' do
+			p = Player.new "Neil", "H"
+			expect(p.name).to eq "Neil"
+	    end
+
 	    it 'should have a score' do
 			p = Player.new "Neil", "H"
 			expect(p.score).to eq 0
