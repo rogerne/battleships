@@ -12,7 +12,7 @@ class Grid
     end
     @letters = Hash.new
     @numbers = Hash.new
-    fill_letters
+    fill_letters size
   end
   
 public
@@ -32,13 +32,14 @@ public
     return x.each { |y| y }.join(" ")
   end
   
-  def fill_letters
+  def fill_letters(size)
     i = 1
     ("A".."Z").each {|let|
       #puts "#{i}: #{let}"
       letters[i] = let
       numbers[let] = i
       i += 1
+      break unless i <= size
     }
   end
 
@@ -48,6 +49,20 @@ public
     co_ords["y"] = grid_ref.byteslice(1,grid_ref.size).to_i
     return co_ords
   end
+
+  def is_valid_ref?(ref)
+    is_valid_ref = true
+    co = get_co_ords(ref)
+    unless @letters.has_value?(co["x"])
+      is_valid_ref = false
+    end
+
+    unless @numbers.has_value?(co["y"].to_i)
+      is_valid_ref = false
+    end
+    return is_valid_ref
+  end
+
 private
   def build_display_header(len)
     cols = "  "
