@@ -53,16 +53,11 @@ public
   def is_valid_ref?(ref)
     is_valid_ref = true
     co = get_co_ords(ref)
-    #puts @letters
-    puts "x = #{co["x"]} y = #{co["y"].to_i}"
-
     unless @letters.has_value?(co["x"])
-      puts "Entering here "
       is_valid_ref = false
     end
 
     unless @numbers.has_value?(co["y"].to_i)
-      puts "Entering this one"
       is_valid_ref = false
     end
     return is_valid_ref

@@ -66,10 +66,7 @@ player2.display_grid = DisplayGrid.new game_size
 
 
 def set_players
-  #puts "Now im here : #{@player_no}"
-  #puts "p numb = #{@player_no}"
   @player_no == 1 ? @player_no = 2 : @player_no = 1
-  #puts "p numb now = #{@player_no}"
   @defender_no == 1 ? @defender_no = 2 : @defender_no = 1
   @player = @players[@player_no]
   @p_dg = @player.display_grid
@@ -77,14 +74,13 @@ def set_players
   @d_gg = @defender.game_grid
 end
 
-#puts "Got here"
 set_players
 
 while playing do
+  puts "\nPlayer #{@player.name} to play: This is what you see\n\n"
   @p_dg.show_grid
-  puts "Player #{@player.name}: Take a shot [Enter a grid ref or q to Quit]?"
+  puts "\nPlayer #{@player.name}: Take a shot [Enter a grid ref or q to Quit]?"
   while play = gets.chomp!
-    #puts "Game on for #{play.upcase}"
     case play.upcase
       when "Q"
         puts "Thanks for the game. Bye!"
@@ -93,16 +89,15 @@ while playing do
         break   
       else
         co = @p_dg.get_co_ords play
-        puts "You selected #{co["x"]} #{co["y"]}"
-        if @p_dg.is_valid_ref?(play)
-          puts "Do some stuff"
-          
-
-
-          set_players
-          break
+        puts "\nYou selected #{co["x"]} #{co["y"]}"
+        if @p_dg.is_valid_ref?(play) && @p_dg.can_take_hit?(play)
+          puts "\nThe result is......"
+            @p_dg.update_grid(play, "@")
+            @p_dg.show_grid
+            set_players
+            break
         else
-          puts "Please enter a valid ref"
+          puts "Please enter a valid ref or one that you've not already hit"
         end
     end
   end
