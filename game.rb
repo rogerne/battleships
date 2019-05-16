@@ -45,7 +45,6 @@ ors = {"V" => "Vertical", "H" => "Horizontal"}
     
     p1.add_vessel test_vessel
     p1.show_grid
-    puts "Your fleet currently consists of #{player1.game_grid.vessels}"
   end
 =begin
 p1.add_vessel Vessel.new "AC" , "H", "A" , 1
