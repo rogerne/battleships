@@ -43,6 +43,29 @@ public
 
     return can_add_vessel
   end
+
+  def hit(ref)
+    hit = ""
+    co = get_co_ords(ref)
+    val = @grid[numbers[co["x"]] - 1 ][co["y"] - 1 ]
+    case val
+    when "X"
+      hit = "@"
+    else
+      my_code = (Vessel.class_eval '@@CODES')[val]
+      #puts " = #{my_code}"
+      vessel = @vessels[my_code]
+      #puts vessel.to_string
+      vessel.hit
+      #puts "vessel.sunk = #{vessel.sunk}"
+      if vessel.sunk
+         hit = "S"
+        else
+         hit = "H"
+      end 
+    end
+    return hit  
+  end
   
 private
   def fill_grid(v)

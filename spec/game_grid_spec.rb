@@ -55,10 +55,23 @@ describe GameGrid do
 		it 'should accept a Submarine to be Horizontal a B8' do
 			SH = Vessel.new "SU", "H", "B" , 8
 			expect(@g.can_add_vessel?(SH)).to eq true
-			@g.add_vessel SH
+			
 
 		end
 
+	end
+
+	context "When in play" do
+
+		it 'should report on what it hit' do
+			SH = Vessel.new "SU", "H", "B" , 2
+			@g.add_vessel SH
+			expect(@g.hit("B1")).to eq "M"
+			expect(@g.hit("B2")).to eq "H"
+      expect(@g.hit("B3")).to eq "H"
+      expect(@g.hit("B3")).to eq "S"			
+			
+		end
 	end
 end
 

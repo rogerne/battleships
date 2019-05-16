@@ -1,10 +1,11 @@
 class Vessel
  attr_reader :type, :x, :y, :direction, :length, :display_code, :hits, :sunk
- 
+  @@CODES= {"A" => "AC","B" => "BA","C" => "CR","S" => "SU","D" => "DE"}
   @length = 2
   #@code = ""
   @display_code = ""
-  
+ 
+
   def initialize(type, direction, x, y)
     @type = type
     @direction = direction
@@ -50,5 +51,9 @@ public
       @hits += 1
       @sunk = true
     end
+  end
+
+  def self.TEST
+    @@TEST
   end
 end
