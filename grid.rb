@@ -22,7 +22,7 @@ require_relative './string'
       
 public
   def show_grid
-    puts "Building Grid".blue
+    
     puts build_display_header @grid.size
     i = 1
     @grid.each do |x|

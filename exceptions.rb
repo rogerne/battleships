@@ -1,11 +1,11 @@
 require_relative './string'
 require_relative './grid'
+require './vessel'
 
 g = Grid.new 3
 g.show_grid
-
-
-
+BA2 = Vessel.new "BA" , "V", "I" , 3
+puts "#{BA2.direction}"
 =begin
 
 puts "Some text ".green + "Some more text".red.bg_magenta + " finally more text".cyan

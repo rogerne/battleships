@@ -19,10 +19,9 @@ playing = true
 
 player1.game_grid = GameGrid.new game_size
 p1 = player1.game_grid
+p1.show_grid
 
-=begin
-
-puts "Please place your fleet:"
+puts "\nPlease place your fleet:"
 fleet = {"AC" => "Aircraft Carrier", "BA" => "Battleship" , "CR" => "Cruiser", "SU" => "Submarine", "DE" => "Destroyer"}
 ors = {"V" => "Vertical", "H" => "Horizontal"}
   fleet.each do |code, ve|
@@ -35,25 +34,31 @@ ors = {"V" => "Vertical", "H" => "Horizontal"}
     while pos = gets.chomp!
       x = pos.byteslice(0).upcase
       y = pos.byteslice(1,pos.size).to_i
-      if player1.game_grid.is_valid_ref?(pos)
+      test_vessel = Vessel.new code, dir, x, y
+      if player1.game_grid.is_valid_ref?(pos) && player1.game_grid.can_add_vessel?(test_vessel)
           puts "Placing #{ve} in orientation #{dir} at #{x}:#{y}"
           break
         else
-          puts "Grid ref invalid"
+          puts "Grid ref invalid or your ship will land on top of an existing one"
       end
     end
     
-    p1.add_vessel Vessel.new code, dir, x, y
+    p1.add_vessel test_vessel
     p1.show_grid
+    puts "Your fleet currently consists of #{player1.game_grid.vessels}"
   end
-=end
-
+=begin
 p1.add_vessel Vessel.new "AC" , "H", "A" , 1
 p1.add_vessel Vessel.new "BA" , "H", "C" , 5
 p1.add_vessel Vessel.new "CR" , "V", "C" , 1
 p1.add_vessel Vessel.new "SU" , "V", "E" , 5
 p1.add_vessel Vessel.new "DE" , "H", "I" , 6
+=end
 player1.display_grid = DisplayGrid.new game_size
+
+puts "Your Fleet is deployed. Enter any key to continue or Q to quit"
+continue = gets.chomp!
+abort("She cannot take any more of this, Captain!") if continue == "Q" 
 
 player2.game_grid = GameGrid.new game_size
 p2 = player2.game_grid
@@ -77,7 +82,8 @@ end
 set_players
 
 while playing do
-  puts "\nPlayer #{@player.name} to play: This is what you see\n\n"
+  puts "\nPlayer #{@player.name} to play:\n\n"
+  puts "Targetting Grid".cyan 
   @p_dg.show_grid
   puts "\nPlayer #{@player.name}: Take a shot [Enter a grid ref or q to Quit]?"
   while play = gets.chomp!
@@ -89,11 +95,12 @@ while playing do
         break   
       else
         co = @p_dg.get_co_ords play
-        puts "\nYou selected #{co["x"]} #{co["y"]}"
+        puts "\nYou selected #{co["x"]} #{co["y"]}. The result is...\n\n"
         if @p_dg.is_valid_ref?(play) && @p_dg.can_take_hit?(play)
-          puts "\nThe result is......"
+          puts "Targetting Grid".cyan
             @p_dg.update_grid(play, "@")
             @p_dg.show_grid
+            puts "Swapping players\n\n"
             set_players
             break
         else
