@@ -1,9 +1,10 @@
 class Player
 attr_reader :score, :name,:type
-attr_accessor :game_grid, :display_grid
+attr_accessor :game_grid, :display_grid, :ocean_grid
 
   @game_grid
   @display_grid
+  @ocean_grid
 
 	def initialize(name, type)
 		@name = name
@@ -16,6 +17,10 @@ attr_accessor :game_grid, :display_grid
 public
   def to_string
   	return "Name = #{@name}, #{@display_type}"
+  end
+
+  def record_score
+    @score += 1
   end
 
  private

@@ -1,6 +1,7 @@
 require_relative 'grid'
 require_relative 'game_grid'
 require_relative 'display_grid'
+require_relative 'ocean_grid'
 require_relative 'vessel'
 require_relative 'player'
 for arg in ARGV
@@ -17,8 +18,11 @@ playing = true
 @defender_no
 @player
 @p_dg
+@p_og
 @defender
 @d_gg
+@d_og
+@fleet = {"AC" => "Aircraft Carrier", "BA" => "Battleship" , "CR" => "Cruiser", "SU" => "Submarine", "DE" => "Destroyer"}
 
 player1.game_grid = GameGrid.new game_size
 p1 = player1.game_grid
@@ -34,9 +38,8 @@ case switch
   else
     p1.show_grid
     puts "\nPlease place your fleet:"
-    fleet = {"AC" => "Aircraft Carrier", "BA" => "Battleship" , "CR" => "Cruiser", "SU" => "Submarine", "DE" => "Destroyer"}
     ors = {"V" => "Vertical", "H" => "Horizontal"}
-      fleet.each do |code, ve|
+      @fleet.each do |code, ve|
         puts "Deploy the #{ve}"
         puts "Do you want the #{ve} to be #{ors["V"]} 'V' or  #{ors["H"]} 'H'?"
         
@@ -62,6 +65,8 @@ case switch
 end
     
 player1.display_grid = DisplayGrid.new game_size
+player1.ocean_grid = OceanGrid.new game_size
+player1.ocean_grid.replace_grid p1.grid
 
 puts "Your Fleet is deployed. Enter any key to continue or Q to quit"
 continue = gets.chomp!
@@ -75,16 +80,20 @@ p2.add_vessel Vessel.new "CR" , "H", "F" , 5
 p2.add_vessel Vessel.new "SU" , "V", "B" , 5
 p2.add_vessel Vessel.new "DE" , "V", "C" , 7
 player2.display_grid = DisplayGrid.new game_size
-
+player2.ocean_grid = OceanGrid.new game_size
+player2.ocean_grid.replace_grid p2.grid
 
 def set_players
   @player_no == 1 ? @player_no = 2 : @player_no = 1
   @player_no == 1 ? @defender_no = 2 : @defender_no = 1
   @player = @players[@player_no]
   @p_dg = @player.display_grid
+  @p_og = @player.ocean_grid
+  @p_gg = @player.game_grid
   @defender = @players[@defender_no]
-  #puts "The Defender is now #{@defender.name}"
   @d_gg = @defender.game_grid
+  @d_og = @defender.ocean_grid
+  @p_gg = @player.game_grid
 end
 
 set_players
@@ -95,7 +104,12 @@ while playing do
       when "H"
         puts "\nPlayer #{@player.name} to play:\n\n"
         puts "#{@player.name}'s Targetting Grid".cyan 
+        #Show their view of the enemy board
         @p_dg.show_grid 
+        puts "#{@player.name}'s Ocean Grid".cyan
+        #Show the state of the players fleet 
+        @p_og.show_grid 
+        puts "\nScore: ".magenta + "#{@player.name} #{@player.score}: #{@defender.name} #{@defender.score}"
         puts "\nPlayer #{@player.name}: Take a shot [Enter a grid ref or q to Quit]?"
         while play = gets.chomp!
           if play.size > 0
@@ -110,17 +124,32 @@ while playing do
       when "Q"
         puts "Thanks for the game. Bye!"
         playing = false  
-        puts "breaking..."
       break  
     else      
       if @p_dg.is_valid_ref?(play) && @p_dg.can_take_hit?(play)
           co = @p_dg.get_co_ords play
-          puts "\nPlayer #{@player.name} selected #{co["x"]} #{co["y"]}. The result is...\n\n"
           result = @d_gg.hit(play)
-          puts "#{@player.name}'s Targetting Grid".cyan
-          @p_dg.update_grid(play, result)           
-          @p_dg.show_grid
-
+          case result
+          when "@"
+            result_string = "a miss"
+          when "H"
+            result_string = "a hit"
+          when "S"            
+            result_string = "you sunk the #{@fleet[@d_gg.vessel_code(play)]}".red
+            @player.record_score
+          end  
+          puts "\nPlayer #{@player.name} selected #{co["x"]}#{co["y"]}. The result is #{result_string}\n\n"
+          if @player.type == "H"
+            puts "#{@player.name}'s Targetting Grid".cyan
+            @p_dg.update_grid(play, result)           
+            @p_dg.show_grid
+          end
+          #update the defenders Ocean Grid so they see it on their turn
+          @d_og.update_grid(play, result) 
+          if @player.type == "C"
+          #display defenders's Ocean Grid so they can see the result          
+            @d_og.show_grid
+          end
           puts "Hit any key to continue."
           cont = gets.chomp!
 

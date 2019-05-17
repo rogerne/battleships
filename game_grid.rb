@@ -66,6 +66,13 @@ public
     end
     return hit  
   end
+
+  def vessel_code(ref)
+    co = get_co_ords(ref)
+    val = @grid[numbers[co["x"]] - 1 ][co["y"] - 1 ]
+    my_code = (Vessel.class_eval '@@CODES')[val]
+    return my_code
+  end
   
 private
   def fill_grid(v)

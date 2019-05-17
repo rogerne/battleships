@@ -1,6 +1,6 @@
 class Vessel
  attr_reader :type, :x, :y, :direction, :length, :display_code, :hits, :sunk
-  @@CODES= {"A" => "AC","B" => "BA","C" => "CR","S" => "SU","D" => "DE"}
+  @@CODES= {"A" => "AC","B" => "BA","C" => "CR","U" => "SU","D" => "DE"}
   @length = 2
   #@code = ""
   @display_code = ""
@@ -30,7 +30,7 @@ private
       @display_code = "C"
     when "SU"
       @length = 3  
-      @display_code = "S"
+      @display_code = "U"
     when "DE"
       @length = 2
       @display_code = "D"

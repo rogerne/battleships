@@ -2,7 +2,7 @@ require_relative './string'
 
  class Grid
   attr_accessor :vessels 
-  attr_reader :letters, :numbers
+  attr_reader :letters, :numbers, :grid
 
   
   def initialize(size)
@@ -13,7 +13,6 @@ require_relative './string'
         @grid[x][y] = "X"
       end
     end
-    @test_grid = [["X", "X", "X"],["X", "@", "X"],["X", "X", "X"]]
   
     @letters = Hash.new
     @numbers = Hash.new
@@ -26,7 +25,6 @@ public
     puts build_display_header @grid.size
     i = 1
     @grid.each do |x|
-    #@test_grid.each do |x|
       print "#{@letters[i]} "
       r = ""
       x.each do |y|
@@ -35,6 +33,10 @@ public
           r << y << " "
         when "X"  
           r << y.blue << " "
+        when "H"  
+          r << y.red << " "
+        when "S"  
+          r << y.red.bold << " "                    
         else
           r << y.green << " "
         end 

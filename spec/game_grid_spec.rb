@@ -45,7 +45,7 @@ describe GameGrid do
 			expect(@g.can_add_vessel?(BA2)).to eq false
 		end
 
-		it 'description' do
+		it 'should not accept a Vessel that will exceed the grid boundary' do
 			SV = Vessel.new "AC", "V", "H" , 2
 			expect(@g.can_add_vessel?(SV)).to eq false
 
@@ -71,6 +71,12 @@ describe GameGrid do
             expect(@g.hit("B3")).to eq "H"
             expect(@g.hit("B3")).to eq "S"			
 			
+		end
+
+		it 'should return the code for the vessel at a grid reference' do
+			carrier1 = Vessel.new "AC" , "H", "G" , 2
+			@g.add_vessel carrier1
+			expect(@g.vessel_code("G2")).to eq "AC"
 		end
 	end
 end
