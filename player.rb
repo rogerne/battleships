@@ -1,5 +1,5 @@
 class Player
-attr_reader :score, :name
+attr_reader :score, :name,:type
 attr_accessor :game_grid, :display_grid
 
   @game_grid

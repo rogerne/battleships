@@ -79,10 +79,11 @@ player2.display_grid = DisplayGrid.new game_size
 
 def set_players
   @player_no == 1 ? @player_no = 2 : @player_no = 1
-  @defender_no == 1 ? @defender_no = 2 : @defender_no = 1
+  @player_no == 1 ? @defender_no = 2 : @defender_no = 1
   @player = @players[@player_no]
   @p_dg = @player.display_grid
   @defender = @players[@defender_no]
+  #puts "The Defender is now #{@defender.name}"
   @d_gg = @defender.game_grid
 end
 
@@ -92,18 +93,32 @@ while playing do
   puts "\nPlayer #{@player.name} to play:\n\n"
   puts "#{@player.name}'s Targetting Grid".cyan 
   @p_dg.show_grid
-  puts "\nPlayer #{@player.name}: Take a shot [Enter a grid ref or q to Quit]?"
-  while play = gets.chomp!
-    case play.upcase
-      when "Q"
-        puts "Thanks for the game. Bye!"
-        playing = false  
-        puts "breaking..."
-        break   
+    case @player.type
+    when "H"
+      puts "\nPlayer #{@player.name}: Take a shot [Enter a grid ref or q to Quit]?"
+      while play = gets.chomp!
+        if play.size > 0
+          break
+        end
+      end
+    when "C"
+      play = @p_dg.get_play
+    end
+
+    #while play
+    loop do
+      case play.upcase
+        when "Q"
+          puts "Thanks for the game. Bye!"
+          playing = false  
+          puts "breaking..."
+        break  
+
       else
         co = @p_dg.get_co_ords play
         puts "\nYou selected #{co["x"]} #{co["y"]}. The result is...\n\n"
         if @p_dg.is_valid_ref?(play) && @p_dg.can_take_hit?(play)
+
             result = @d_gg.hit(play)
             puts "#{@player.name}'s Targetting Grid".cyan
             @p_dg.update_grid(play, result)           
@@ -115,6 +130,9 @@ while playing do
             puts "Swapping players\n\n"
             set_players
             break
+
+
+
         else
           puts "Please enter a valid ref or one that you've not already hit"
         end
