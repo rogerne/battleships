@@ -32,15 +32,14 @@ public
       x.each do |y|
         case y
         when "@"
-          r << y.bg_blue << " "
+          r << y << " "
         when "X"  
           r << y.blue << " "
         else
-          r << y.red << " "
+          r << y.green << " "
         end 
       end
       puts r
-      #puts x.each { |y| y }.join("_").red
       i += 1
     end
   end

@@ -66,10 +66,10 @@ describe GameGrid do
 		it 'should report on what it hit' do
 			SH = Vessel.new "SU", "H", "B" , 2
 			@g.add_vessel SH
-			expect(@g.hit("B1")).to eq "M"
+			expect(@g.hit("B1")).to eq "@"
 			expect(@g.hit("B2")).to eq "H"
-      expect(@g.hit("B3")).to eq "H"
-      expect(@g.hit("B3")).to eq "S"			
+            expect(@g.hit("B3")).to eq "H"
+            expect(@g.hit("B3")).to eq "S"			
 			
 		end
 	end

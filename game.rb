@@ -90,52 +90,46 @@ end
 set_players
 
 while playing do
-  puts "\nPlayer #{@player.name} to play:\n\n"
-  puts "#{@player.name}'s Targetting Grid".cyan 
-  @p_dg.show_grid
+  loop do
     case @player.type
-    when "H"
-      puts "\nPlayer #{@player.name}: Take a shot [Enter a grid ref or q to Quit]?"
-      while play = gets.chomp!
-        if play.size > 0
-          break
-        end
-      end
-    when "C"
-      play = @p_dg.get_play
-    end
-
-    #while play
-    loop do
-      case play.upcase
-        when "Q"
-          puts "Thanks for the game. Bye!"
-          playing = false  
-          puts "breaking..."
-        break  
-
-      else
-        co = @p_dg.get_co_ords play
-        puts "\nYou selected #{co["x"]} #{co["y"]}. The result is...\n\n"
-        if @p_dg.is_valid_ref?(play) && @p_dg.can_take_hit?(play)
-
-            result = @d_gg.hit(play)
-            puts "#{@player.name}'s Targetting Grid".cyan
-            @p_dg.update_grid(play, result)           
-            @p_dg.show_grid
-
-            puts "Hit any key to continue."
-            cont = gets.chomp!
-
-            puts "Swapping players\n\n"
-            set_players
+      when "H"
+        puts "\nPlayer #{@player.name} to play:\n\n"
+        puts "#{@player.name}'s Targetting Grid".cyan 
+        @p_dg.show_grid 
+        puts "\nPlayer #{@player.name}: Take a shot [Enter a grid ref or q to Quit]?"
+        while play = gets.chomp!
+          if play.size > 0
             break
-
-
-
-        else
-          puts "Please enter a valid ref or one that you've not already hit"
+          end
         end
+      when "C"
+        play = @p_dg.get_play
+    end
+ 
+    case play.upcase
+      when "Q"
+        puts "Thanks for the game. Bye!"
+        playing = false  
+        puts "breaking..."
+      break  
+    else      
+      if @p_dg.is_valid_ref?(play) && @p_dg.can_take_hit?(play)
+          co = @p_dg.get_co_ords play
+          puts "\nPlayer #{@player.name} selected #{co["x"]} #{co["y"]}. The result is...\n\n"
+          result = @d_gg.hit(play)
+          puts "#{@player.name}'s Targetting Grid".cyan
+          @p_dg.update_grid(play, result)           
+          @p_dg.show_grid
+
+          puts "Hit any key to continue."
+          cont = gets.chomp!
+
+          puts "Swapping players\n\n"
+          set_players
+          break
+      else
+        puts "Please enter a valid ref or one that you've not already hit"
+      end
     end
   end
 end
