@@ -121,14 +121,14 @@ while playing do
     end
  
     case play.upcase
-      when "Q"
-        puts "Thanks for the game. Bye!"
-        playing = false  
+    when "Q"
+      puts "Thanks for the game. Bye!"
+      playing = false  
       break  
     else      
       if @p_dg.is_valid_ref?(play) && @p_dg.can_take_hit?(play)
-          co = @p_dg.get_co_ords play
-          result = @d_gg.hit(play)
+        result = @d_gg.hit(play)
+          
           case result
           when "@"
             result_string = "a miss"
@@ -137,15 +137,20 @@ while playing do
           when "S"            
             result_string = "you sunk the #{@fleet[@d_gg.vessel_code(play)]}".red
             @player.record_score
-          end  
+          end
+
+          co = @p_dg.get_co_ords play
           puts "\nPlayer #{@player.name} selected #{co["x"]}#{co["y"]}. The result is #{result_string}\n\n"
+          @p_dg.update_grid(play, result)
+
           if @player.type == "H"
             puts "#{@player.name}'s Targetting Grid".cyan
-            @p_dg.update_grid(play, result)           
             @p_dg.show_grid
           end
+      
           #update the defenders Ocean Grid so they see it on their turn
           @d_og.update_grid(play, result) 
+          
           if @player.type == "C"
           #display defenders's Ocean Grid so they can see the result          
             @d_og.show_grid

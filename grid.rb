@@ -91,4 +91,16 @@ private
     end
     return cols
   end  
+
+
+  def get_x_int(ref)
+    co = get_co_ords(ref)
+    x = numbers[co["x"]]
+  end
+
+  def get_y_int(ref)
+      co = get_co_ords(ref)
+      y = co["y"].to_i
+  end
+  
 end

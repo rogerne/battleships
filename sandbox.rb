@@ -10,7 +10,12 @@ p2.add_vessel Vessel.new "CR" , "H", "F" , 5
 p2.add_vessel Vessel.new "SU" , "V", "B" , 5
 p2.add_vessel Vessel.new "DE" , "V", "C" , 7
 p2.show_grid
+
+
 =end
 
 p2 = DisplayGrid.new 10
-puts p2.get_play
+p2.update_grid("C4", "H")
+p2.update_grid("B4", "H")
+3.times {puts "#{p2.get_play}\n\n"}
+
