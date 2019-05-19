@@ -2,11 +2,11 @@ require './grid'
 require './game_grid'
 require './vessel'
 
-describe Vessel do
+describe GameGrid do
   before(:each) do
     @gg = GameGrid.new 10	
     @v = Vessel.new "AC" , "H", "A" , 1
-	@gg.add_vessel(@v)
+	  @gg.add_vessel(@v)
   end	
 
   context "when the player hits a grid ref with a vessel in it" do

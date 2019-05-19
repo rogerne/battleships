@@ -12,20 +12,16 @@ public
     #Test for length  
       case v.direction
         when "V"   
-          #puts "{vx + v.length - 1} #{vx + v.length - 1}"
           if !@numbers.has_value?(vx + v.length - 1)
             can_add_vessel = false 
-            puts "F V"
           end
               
         when "H"
           if !@numbers.has_value?(v.y + v.length - 1)
             can_add_vessel = false 
-            puts "F H"
           end
       end  
 
-      #puts "can_add_vessel #{can_add_vessel}"
       if can_add_vessel      
       
       #Then test for exisiting ships
@@ -53,11 +49,8 @@ public
       hit = "@"
     else
       my_code = (Vessel.class_eval '@@CODES')[val]
-      #puts " = #{my_code}"
       vessel = @vessels[my_code]
-      #puts vessel.to_string
       vessel.hit
-      #puts "vessel.sunk = #{vessel.sunk}"
       if vessel.sunk
          hit = "S"
         else
@@ -73,6 +66,24 @@ public
     my_code = (Vessel.class_eval '@@CODES')[val]
     return my_code
   end
+
+  def auto_deploy(fleet)
+    i = 0
+    fleet.each do |type, desc| 
+      loop do
+        rand(0..1) == 0 ? (dir = "H") : (dir = "V") 
+        x = letters[rand(0..@grid.size)]
+        y = rand(0..@grid.size)
+        v = Vessel.new type , dir, x , y
+        if can_add_vessel?(v) 
+          add_vessel(v)
+          break
+        end
+        i += 1
+        break if i > 100
+      end
+    end
+  end
   
 private
   def fill_grid(v)
@@ -84,7 +95,6 @@ private
           @grid[x-1][v.y-1] = v.display_code
         }
       when "H"
-        #puts "v.y: #{v.y}, v.y+v.length: #{v.y+v.length}"
         (v.y...v.y+v.length).each {|y|
           @grid[vx-1][y-1] = v.display_code
         }

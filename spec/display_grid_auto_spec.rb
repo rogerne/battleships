@@ -9,7 +9,7 @@ describe DisplayGrid do
 	context "When the computer has 1 hit" do
 
 		it "should generate 1 of 4 auto references" do
-			p2 = DisplayGrid.new 10
+		  p2 = DisplayGrid.new 10
       p2.update_grid("C4", "H")
       expect(p2.get_play).to eq("B4").or eq("D4").or eq("C3").or eq("C5")
 		end

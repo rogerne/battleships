@@ -41,13 +41,11 @@ public
           r << y.green << " "
         end 
       end
-      puts r
       i += 1
     end
   end
   
   def show_grid_row(row_no)
-    #puts "Entering method"
     x = @grid[row_no-1]
     return x.each { |y| y }.join(" ")
   end
@@ -55,7 +53,6 @@ public
   def fill_letters(size)
     i = 1
     ("A".."Z").each {|let|
-      #puts "#{i}: #{let}"
       letters[i] = let
       numbers[let] = i
       i += 1

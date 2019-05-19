@@ -28,7 +28,7 @@ player1.game_grid = GameGrid.new game_size
 p1 = player1.game_grid
 
 case switch
-  when "skip"
+  when "skip"   
     p1.add_vessel Vessel.new "AC" , "H", "A" , 1
     p1.add_vessel Vessel.new "BA" , "H", "C" , 5
     p1.add_vessel Vessel.new "CR" , "V", "C" , 1
@@ -74,11 +74,15 @@ abort("She cannot take any more of this, Captain!") if continue == "Q"
 
 player2.game_grid = GameGrid.new game_size
 p2 = player2.game_grid
+p2.auto_deploy(@fleet)
+p2.show_grid
+=begin
 p2.add_vessel Vessel.new "AC" , "V", "B" , 3
 p2.add_vessel Vessel.new "BA" , "H", "H" , 4
 p2.add_vessel Vessel.new "CR" , "H", "F" , 5
 p2.add_vessel Vessel.new "SU" , "V", "B" , 5
 p2.add_vessel Vessel.new "DE" , "V", "C" , 7
+=end
 player2.display_grid = DisplayGrid.new game_size
 player2.ocean_grid = OceanGrid.new game_size
 player2.ocean_grid.replace_grid p2.grid
