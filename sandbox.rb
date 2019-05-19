@@ -14,8 +14,7 @@ p2.show_grid
 
 =end
 
-p2 = DisplayGrid.new 10
-p2.update_grid("C4", "H")
-p2.update_grid("B4", "H")
-3.times {puts "#{p2.get_play}\n\n"}
-
+fleet = {"AC" => "Aircraft Carrier", "BA" => "Battleship" , "CR" => "Cruiser", "SU" => "Submarine", "DE" => "Destroyer"}
+pc_gg = GameGrid.new 10	 
+pc_gg.auto_deploy(fleet)
+pc_gg.show_grid

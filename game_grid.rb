@@ -70,11 +70,13 @@ public
   def auto_deploy(fleet)
     i = 0
     fleet.each do |type, desc| 
+      #puts "#{type} #{desc}"
       loop do
         rand(0..1) == 0 ? (dir = "H") : (dir = "V") 
-        x = letters[rand(0..@grid.size)]
-        y = rand(0..@grid.size)
+        x = letters[rand(1..@grid.size)]
+        y = rand(1..@grid.size)
         v = Vessel.new type , dir, x , y
+        #puts "#{x} #{y} #{v.to_string}"
         if can_add_vessel?(v) 
           add_vessel(v)
           break

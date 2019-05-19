@@ -41,6 +41,7 @@ public
           r << y.green << " "
         end 
       end
+      puts r
       i += 1
     end
   end

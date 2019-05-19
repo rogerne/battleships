@@ -23,7 +23,6 @@ playing = true
 @d_gg
 @d_og
 @fleet = {"AC" => "Aircraft Carrier", "BA" => "Battleship" , "CR" => "Cruiser", "SU" => "Submarine", "DE" => "Destroyer"}
-
 player1.game_grid = GameGrid.new game_size
 p1 = player1.game_grid
 
@@ -75,8 +74,9 @@ abort("She cannot take any more of this, Captain!") if continue == "Q"
 player2.game_grid = GameGrid.new game_size
 p2 = player2.game_grid
 p2.auto_deploy(@fleet)
-p2.show_grid
 =begin
+
+p2.show_grid
 p2.add_vessel Vessel.new "AC" , "V", "B" , 3
 p2.add_vessel Vessel.new "BA" , "H", "H" , 4
 p2.add_vessel Vessel.new "CR" , "H", "F" , 5
@@ -113,8 +113,8 @@ while playing do
         puts "#{@player.name}'s Ocean Grid".cyan
         #Show the state of the players fleet 
         @p_og.show_grid 
-        puts "\nScore: ".magenta + "#{@player.name} #{@player.score}: #{@defender.name} #{@defender.score}"
         puts "\nPlayer #{@player.name}: Take a shot [Enter a grid ref or q to Quit]?"
+
         while play = gets.chomp!
           if play.size > 0
             break
@@ -137,10 +137,16 @@ while playing do
           when "@"
             result_string = "a miss"
           when "H"
-            result_string = "a hit"
+            result_string = "a hit".bg_red
           when "S"            
-            result_string = "you sunk the #{@fleet[@d_gg.vessel_code(play)]}".red
+            result_string = "#{@player.name} sunk the #{@fleet[@d_gg.vessel_code(play)]}".red
             @player.record_score
+            puts "\nScore: ".magenta + "#{@player.name} #{@player.score}: #{@defender.name} #{@defender.score}"
+              if @player.score == @fleet.size
+                puts "\nPlayer #{@player.name} is the winner. Congratulations"
+                playing = false
+                exit
+              end
           end
 
           co = @p_dg.get_co_ords play
@@ -150,6 +156,7 @@ while playing do
           if @player.type == "H"
             puts "#{@player.name}'s Targetting Grid".cyan
             @p_dg.show_grid
+            puts "\nScore: ".magenta + "#{@player.name} #{@player.score}: #{@defender.name} #{@defender.score}"
           end
       
           #update the defenders Ocean Grid so they see it on their turn
