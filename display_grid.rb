@@ -1,5 +1,5 @@
 class DisplayGrid < Grid
-attr_reader :history
+attr_accessor :history
 
  def initialize(size)
   super(size)
